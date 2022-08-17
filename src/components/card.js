@@ -5,14 +5,14 @@ class Card extends Component {
         super(props);
 
         this.state = {
-            icon: "bi bi-star-fill"
+            icon: "bi bi-star"
         };
 
         this.handleStarred = this.handleStarred.bind(this);
     }
 
     handleStarred() {
-        this.setState({icon: "bi bi-star"});
+        this.setState({icon: "bi bi-star-fill"});
     }
 
     render() {
