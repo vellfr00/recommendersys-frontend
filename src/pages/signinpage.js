@@ -6,7 +6,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 
 const baseURI = 'http://localhost:8080/api';
 
-class Signuppage extends Component {
+class Signinpage extends Component {
     constructor(props) {
         super(props);
 
@@ -15,15 +15,11 @@ class Signuppage extends Component {
             serverMessage: "",
 
             username: "",
-            firstname: "",
-            lastname: "",
-            age: "",
-            gender: "",
             elicitationId: ""
         }
     }
 
-    handleSubmit = (e) => {
+    handleLogin = (e) => {
         e.preventDefault();
 
         const body = e.target.body;
@@ -37,15 +33,11 @@ class Signuppage extends Component {
 
             body: JSON.stringify({
                 username: this.state.username,
-                firstname: this.state.firstname,
-                lastname: this.state.lastname,
-                gender: this.state.gender,
-                age: this.state.age,
                 elicitationId: this.state.elicitationId
             })
         }).then((res) => {
             if (res.status === 200) {
-                this.setState({ serverSuccess: true, serverMessage: "User registered successfully" });
+                this.setState({ serverSuccess: true, serverMessage: "User logged successfully" });
             } else {
                 res.json().then((document) => {
                     this.setState({ serverSuccess: false, serverMessage: document.message });
@@ -66,11 +58,11 @@ class Signuppage extends Component {
                 <Container>
                     <Row className="justify-content-center">
                         <Col lg="2">
-                            <h1>Signup</h1>
+                            <h1>Signin</h1>
                         </Col>
                     </Row>
                     <Servermessage serverSuccess={this.state.serverSuccess} serverMessage={this.state.serverMessage} />
-                    <Form onSubmit={this.handleSubmit}>
+                    <Form onSubmit={this.handleLogin}>
                         <Form.Group>
                             <Row className="justify-content-center">
                                 <Col lg="6">
@@ -78,42 +70,6 @@ class Signuppage extends Component {
                                         Username
                                     </Form.Label>
                                     <Form.Control type='text' name='username' value={this.state.username} onChange={this.handleChange} />
-                                </Col>
-                            </Row>
-                            <Row className="justify-content-center">
-                                <Col lg="6">
-                                    <Form.Label>
-                                        Firstname
-                                    </Form.Label>
-                                    <Form.Control type='text' name='firstname' value={this.state.firstname} onChange={this.handleChange} />
-                                </Col>
-                            </Row>
-                            <Row className="justify-content-center">
-                                <Col lg="6">
-                                    <Form.Label>
-                                        Lastname
-                                    </Form.Label>
-                                    <Form.Control type='text' name='lastname' value={this.state.lastname} onChange={this.handleChange} />
-                                </Col>
-                            </Row>
-                            <Row className="justify-content-center">
-                                <Col lg="6">
-                                    <Form.Label>
-                                        Gender
-                                    </Form.Label>
-                                    <Form.Select name='gender' value={this.state.gender} onChange={this.handleChange}>
-                                        <option>Select your gender</option>
-                                        <option value={'m'}>Male</option>
-                                        <option value={'f'}>Female</option>
-                                    </Form.Select>
-                                </Col>
-                            </Row>
-                            <Row className="justify-content-center">
-                                <Col lg="6">
-                                    <Form.Label>
-                                        Age
-                                    </Form.Label>
-                                    <Form.Control type='number' name='age' value={this.state.age} onChange={this.handleChange} />
                                 </Col>
                             </Row>
                             <Row className="justify-content-center">
@@ -127,7 +83,7 @@ class Signuppage extends Component {
                         </Form.Group>
                         <Row className="justify-content-center" lg="6" style={{ marginTop: "10px" }}>
                             <Button variant='primary' type='submit'>
-                                Signup
+                                Signin
                             </Button>
                         </Row>
                     </Form>
@@ -137,4 +93,4 @@ class Signuppage extends Component {
     }
 }
 
-export default Signuppage;
+export default Signinpage;
