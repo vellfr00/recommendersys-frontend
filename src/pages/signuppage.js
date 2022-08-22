@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Servermessage from '../components/servermessage'
-import { Col, Container, Row } from 'react-bootstrap';
+import {Col, Container, FloatingLabel, Row} from 'react-bootstrap';
 
 const baseURI = 'http://localhost:8080/api';
 
@@ -64,68 +64,54 @@ class Signuppage extends Component {
         return (
             <>
                 <Container>
-                    <Row className="justify-content-center">
-                        <Col lg="2">
-                            <h1>Signup</h1>
-                        </Col>
+                    <Row className="justify-content-center m-1" lg="6">
+                        <h1 className="text-center">Signup</h1>
                     </Row>
                     <Servermessage serverSuccess={this.state.serverSuccess} serverMessage={this.state.serverMessage} />
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Group>
-                            <Row className="justify-content-center">
-                                <Col lg="6">
-                                    <Form.Label>
-                                        Username
-                                    </Form.Label>
-                                    <Form.Control type='text' name='username' value={this.state.username} onChange={this.handleChange} />
+                            <Row className="justify-content-center p-1">
+                                <Col lg="4">
+                                    <FloatingLabel label="Username">
+                                        <Form.Control placeholder="Username" type='text' name='username' value={this.state.username} onChange={this.handleChange} />
+                                    </FloatingLabel>
+                                </Col>
+                                <Col lg="2">
+                                    <FloatingLabel label="ElicitationId">
+                                        <Form.Control placeholder="ElicitationId" type='number' name='elicitationId' value={this.state.elicitationId} onChange={this.handleChange} />
+                                    </FloatingLabel>
                                 </Col>
                             </Row>
-                            <Row className="justify-content-center">
-                                <Col lg="6">
-                                    <Form.Label>
-                                        Firstname
-                                    </Form.Label>
-                                    <Form.Control type='text' name='firstname' value={this.state.firstname} onChange={this.handleChange} />
+                            <Row className="justify-content-center p-1">
+                                <Col lg="3">
+                                    <FloatingLabel label="First name">
+                                        <Form.Control placeholder="First name" type='text' name='firstname' value={this.state.firstname} onChange={this.handleChange} />
+                                    </FloatingLabel>
+                                </Col>
+                                <Col lg="3">
+                                    <FloatingLabel label="Last name">
+                                        <Form.Control placeholder="Last name" type='text' name='lastname' value={this.state.lastname} onChange={this.handleChange} />
+                                    </FloatingLabel>
                                 </Col>
                             </Row>
-                            <Row className="justify-content-center">
-                                <Col lg="6">
-                                    <Form.Label>
-                                        Lastname
-                                    </Form.Label>
-                                    <Form.Control type='text' name='lastname' value={this.state.lastname} onChange={this.handleChange} />
+                            <Row className="justify-content-center p-1">
+                                <Col lg="4">
+                                    <FloatingLabel label="Gender">
+                                        <Form.Select placeholder="Gender" name='gender' value={this.state.gender} onChange={this.handleChange}>
+                                            <option>Select your gender</option>
+                                            <option value={'m'}>Male</option>
+                                            <option value={'f'}>Female</option>
+                                        </Form.Select>
+                                    </FloatingLabel>
                                 </Col>
-                            </Row>
-                            <Row className="justify-content-center">
-                                <Col lg="6">
-                                    <Form.Label>
-                                        Gender
-                                    </Form.Label>
-                                    <Form.Select name='gender' value={this.state.gender} onChange={this.handleChange}>
-                                        <option>Select your gender</option>
-                                        <option value={'m'}>Male</option>
-                                        <option value={'f'}>Female</option>
-                                    </Form.Select>
-                                </Col>
-                            </Row>
-                            <Row className="justify-content-center">
-                                <Col lg="6">
-                                    <Form.Label>
-                                        Age
-                                    </Form.Label>
-                                    <Form.Control type='number' name='age' value={this.state.age} onChange={this.handleChange} />
-                                </Col>
-                            </Row>
-                            <Row className="justify-content-center">
-                                <Col lg="6">
-                                    <Form.Label>
-                                        ElicitationId
-                                    </Form.Label>
-                                    <Form.Control type='number' name='elicitationId' value={this.state.elicitationId} onChange={this.handleChange} />
+                                <Col lg="2">
+                                    <FloatingLabel label="Age">
+                                        <Form.Control placeholder="Age" type='number' name='age' value={this.state.age} onChange={this.handleChange} />
+                                    </FloatingLabel>
                                 </Col>
                             </Row>
                         </Form.Group>
-                        <Row className="justify-content-center" lg="6" style={{ marginTop: "10px" }}>
+                        <Row className="justify-content-center m-1" lg="6" >
                             <Button variant='primary' type='submit'>
                                 Signup
                             </Button>
