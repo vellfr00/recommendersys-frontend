@@ -70,6 +70,7 @@ class Signuppage extends Component {
                             <h1>Signup</h1>
                         </Col>
                     </Row>
+                    <Servermessage serverSuccess={this.state.serverSuccess} serverMessage={this.state.serverMessage} />
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Group>
                             <Row className="justify-content-center">
@@ -125,15 +126,12 @@ class Signuppage extends Component {
                                 </Col>
                             </Row>
                         </Form.Group>
-                        <Row className="justify-content-center" lg="6" style={{marginTop:"10px"}}>
-                            
-                                <Button variant='primary' type='submit'>
-                                    Signup
-                                </Button>
-                            
+                        <Row className="justify-content-center" lg="6" style={{ marginTop: "10px" }}>
+                            <Button variant='primary' type='submit'>
+                                Signup
+                            </Button>
                         </Row>
                     </Form>
-                    <Servermessage serverSuccess={this.state.serverSuccess} serverMessage={this.state.serverMessage} />
                 </Container>
             </>
         );
