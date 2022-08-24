@@ -62,7 +62,6 @@ class Signuppage extends Component {
 
     render() {
         return (
-            <>
                 <Container>
                     <Row className="justify-content-center m-1">
                         <Col lg="6">
@@ -113,14 +112,13 @@ class Signuppage extends Component {
                                 </Col>
                             </Row>
                         </Form.Group>
-                        <Row className="justify-content-center m-1" lg="6" >
+                        <Row className="justify-content-center m-1" lg="6">
                             <Button variant='primary' type='submit'>
-                                Signup
+                                Sign up
                             </Button>
                         </Row>
                     </Form>
                 </Container>
-            </>
         );
     }
 }

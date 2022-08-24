@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Servermessage from '../components/servermessage'
 import {Col, Container, FloatingLabel, Row} from 'react-bootstrap';
+import {UserContext} from "../context/usercontext";
 
 const baseURI = 'http://localhost:8080/api';
 
@@ -19,23 +20,16 @@ class Signinpage extends Component {
         }
     }
 
-    handleLogin = (e) => {
+    handleLogin = (e, setUser) => {
         e.preventDefault();
 
-        fetch(baseURI + '/users/', {
-            method: "POST",
-
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            }),
-
-            body: JSON.stringify({
-                username: this.state.username,
-                elicitationId: this.state.elicitationId
-            })
-        }).then((res) => {
+        fetch(baseURI + '/users/' + this.state.username + '?elicitationId=' + this.state.elicitationId)
+            .then((res) => {
             if (res.status === 200) {
-                this.setState({ serverSuccess: true, serverMessage: "User logged successfully" });
+                res.json().then((document) => {
+                    this.setState({ serverSuccess: true, serverMessage: "User logged successfully" });
+                    setUser(document);
+                });
             } else {
                 res.json().then((document) => {
                     this.setState({ serverSuccess: false, serverMessage: document.message });
@@ -52,39 +46,51 @@ class Signinpage extends Component {
 
     render() {
         return (
-            <>
-                <Container>
-                    <Row className="justify-content-center m-1">
-                        <Col lg="6">
-                            <h1 className="text-center">Sign in</h1>
-                            <Servermessage serverSuccess={this.state.serverSuccess} serverMessage={this.state.serverMessage} />
-                        </Col>
-                    </Row>
-                    <Form onSubmit={this.handleLogin}>
-                        <Form.Group>
+            <UserContext.Consumer>
+                {({user, setUser}) => (
+                    user ?
+                        <Container>
                             <Row className="justify-content-center m-1">
                                 <Col lg="6">
-                                    <FloatingLabel label="Username">
-                                        <Form.Control placeholder="Username" type='text' name='username' value={this.state.username} onChange={this.handleChange} />
-                                    </FloatingLabel>
+                                    <h1 className="text-center">Sign in</h1>
+                                    <Servermessage serverSuccess={false} serverMessage={"Already signed in as " + user.username} />
                                 </Col>
                             </Row>
-                            <Row className="justify-content-center m-1">
-                                <Col lg="6">
-                                    <FloatingLabel label="ElicitationId">
-                                        <Form.Control placeholder="ElicitationId" type='number' name='elicitationId' value={this.state.elicitationId} onChange={this.handleChange} />
-                                    </FloatingLabel>
-                                </Col>
-                            </Row>
-                        </Form.Group>
-                        <Row className="justify-content-center" lg="6">
-                            <Button variant='primary' type='submit'>
-                                Sign in
-                            </Button>
+                        </Container>
+                        :
+                    <Container>
+                        <Row className="justify-content-center m-1">
+                            <Col lg="6">
+                                <h1 className="text-center">Sign in</h1>
+                                <Servermessage serverSuccess={this.state.serverSuccess} serverMessage={this.state.serverMessage} />
+                            </Col>
                         </Row>
-                    </Form>
-                </Container>
-            </>
+                        <Form onSubmit={(e) => {this.handleLogin(e, setUser)}}>
+                            <Form.Group>
+                                <Row className="justify-content-center p-1">
+                                    <Col lg="6">
+                                        <FloatingLabel label="Username">
+                                            <Form.Control placeholder="Username" type='text' name='username' value={this.state.username} onChange={this.handleChange} />
+                                        </FloatingLabel>
+                                    </Col>
+                                </Row>
+                                <Row className="justify-content-center p-1">
+                                    <Col lg="6">
+                                        <FloatingLabel label="ElicitationId">
+                                            <Form.Control placeholder="ElicitationId" type='number' name='elicitationId' value={this.state.elicitationId} onChange={this.handleChange} />
+                                        </FloatingLabel>
+                                    </Col>
+                                </Row>
+                            </Form.Group>
+                            <Row className="justify-content-center m-1" lg="6" >
+                                <Button variant='primary' type='submit'>
+                                    Sign in
+                                </Button>
+                            </Row>
+                        </Form>
+                    </Container>
+                )}
+            </UserContext.Consumer>
         );
     }
 }
