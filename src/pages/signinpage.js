@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Servermessage from '../components/servermessage'
-import { Col, Container, Row } from 'react-bootstrap';
+import {Col, Container, FloatingLabel, Row} from 'react-bootstrap';
 
 const baseURI = 'http://localhost:8080/api';
 
@@ -21,8 +21,6 @@ class Signinpage extends Component {
 
     handleLogin = (e) => {
         e.preventDefault();
-
-        const body = e.target.body;
 
         fetch(baseURI + '/users/', {
             method: "POST",
@@ -56,34 +54,32 @@ class Signinpage extends Component {
         return (
             <>
                 <Container>
-                    <Row className="justify-content-center">
-                        <Col lg="2">
-                            <h1>Signin</h1>
+                    <Row className="justify-content-center m-1">
+                        <Col lg="6">
+                            <h1 className="text-center">Sign in</h1>
+                            <Servermessage serverSuccess={this.state.serverSuccess} serverMessage={this.state.serverMessage} />
                         </Col>
                     </Row>
-                    <Servermessage serverSuccess={this.state.serverSuccess} serverMessage={this.state.serverMessage} />
                     <Form onSubmit={this.handleLogin}>
                         <Form.Group>
-                            <Row className="justify-content-center">
+                            <Row className="justify-content-center m-1">
                                 <Col lg="6">
-                                    <Form.Label>
-                                        Username
-                                    </Form.Label>
-                                    <Form.Control type='text' name='username' value={this.state.username} onChange={this.handleChange} />
+                                    <FloatingLabel label="Username">
+                                        <Form.Control placeholder="Username" type='text' name='username' value={this.state.username} onChange={this.handleChange} />
+                                    </FloatingLabel>
                                 </Col>
                             </Row>
-                            <Row className="justify-content-center">
+                            <Row className="justify-content-center m-1">
                                 <Col lg="6">
-                                    <Form.Label>
-                                        ElicitationId
-                                    </Form.Label>
-                                    <Form.Control type='number' name='elicitationId' value={this.state.elicitationId} onChange={this.handleChange} />
+                                    <FloatingLabel label="ElicitationId">
+                                        <Form.Control placeholder="ElicitationId" type='number' name='elicitationId' value={this.state.elicitationId} onChange={this.handleChange} />
+                                    </FloatingLabel>
                                 </Col>
                             </Row>
                         </Form.Group>
-                        <Row className="justify-content-center" lg="6" style={{ marginTop: "10px" }}>
+                        <Row className="justify-content-center" lg="6">
                             <Button variant='primary' type='submit'>
-                                Signin
+                                Sign in
                             </Button>
                         </Row>
                     </Form>

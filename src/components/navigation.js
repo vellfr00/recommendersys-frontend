@@ -8,18 +8,18 @@ import React, { Component } from 'react';
 class Navigation extends Component {
     render() {
         return (
-
-            <><Navbar bg='light' expand='lg'>
+            <>
+                <Navbar bg='light' expand='lg'>
                 <Container>
                     <Navbar.Brand>
-                        <img src={require('../img/poliflix.png')} alt='' className='d-inline-block align-top' width='100px' height='100px' />
+                        <img src={require('../img/poliflix.png')} alt='' className='d-inline-block align-center' width='70px' height='35px' />
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="/signin">Signin</Nav.Link>
-                            <Nav.Link href="/signup">Signup</Nav.Link>
+                            <Nav.Link href="/signin">Sign in</Nav.Link>
+                            <Nav.Link href="/signup">Sign up</Nav.Link>
                             {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">
@@ -34,7 +34,9 @@ class Navigation extends Component {
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
-            </Navbar><Outlet /></>);
+            </Navbar>
+                <Outlet />
+            </>);
     }
 }
 

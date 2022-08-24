@@ -64,10 +64,12 @@ class Signuppage extends Component {
         return (
             <>
                 <Container>
-                    <Row className="justify-content-center m-1" lg="6">
-                        <h1 className="text-center">Signup</h1>
+                    <Row className="justify-content-center m-1">
+                        <Col lg="6">
+                            <h1 className="text-center">Sign up</h1>
+                            <Servermessage serverSuccess={this.state.serverSuccess} serverMessage={this.state.serverMessage} />
+                        </Col>
                     </Row>
-                    <Servermessage serverSuccess={this.state.serverSuccess} serverMessage={this.state.serverMessage} />
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Group>
                             <Row className="justify-content-center p-1">
