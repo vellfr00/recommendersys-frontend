@@ -10,9 +10,11 @@ class Movie extends React.Component {
         super(props);
 
         this.state = {
-            imgSrc: ""
+            imgSrc: image_not_available
         };
+    }
 
+    getPosterImage = () => {
         fetch(IMDBPosters_BaseURI + this.props.movie.imdbId)
             .then((res) => res.json())
             .then((document) => {
@@ -24,13 +26,18 @@ class Movie extends React.Component {
             }).catch((error) => {
             this.setState({imgSrc: image_not_available});
         });
+    }
 
+    componentDidMount() {
+        this.getPosterImage();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.movie.movieId !== prevProps.movie.movieId)
+            this.getPosterImage();
     }
 
     render() {
-        if(this.state.img === "") // Wait for poster img loaded
-            return (<></>);
-
         return (
             <Card className={"bg-dark border-light text-white " + this.props.className}>
                 <Card.Img src={this.state.imgSrc} alt="Loading Movie Poster..."/>

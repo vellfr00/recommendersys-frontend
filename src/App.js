@@ -8,6 +8,7 @@ import Signuppage from './pages/signuppage';
 import {UserContext} from "./context/usercontext";
 import Selectionpage from "./pages/selectionpage";
 import Signoutpage from "./pages/signoutpage";
+import Orderingpage from "./pages/orderingpage";
 
 class App extends Component {
     constructor(props) {
@@ -42,6 +43,7 @@ class App extends Component {
                             <Route exact path="/signup" element={<Signuppage />} />
                             <Route exact path="/selection" element={<Selectionpage />} />
                             <Route exact path="/signout" element={<Signoutpage />} />
+                            <Route exact path="/ordering" element={<Orderingpage />} />
                         </Route>
                     </Routes>
                 </BrowserRouter>

@@ -4,10 +4,11 @@ import {Col, Container, Form, Row, Spinner} from "react-bootstrap";
 import Servermessage from "../components/servermessage";
 import Button from "react-bootstrap/Button";
 import {UserContext} from "../context/usercontext";
+import Movieselect from "../components/movieselect";
 
 const baseURI = 'http://localhost:8080/api';
 
-class Selectionpage extends React.Component {
+class Orderingpage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -17,18 +18,21 @@ class Selectionpage extends React.Component {
 
             proposed: [],
             proposedMovieCards: null,
-            choice: 0
+            selectForms: null,
+            choice: []
         };
     }
 
-    handleChange = (e) => {
-        this.setState({choice: e.target.value});
+    handleChange = (index, value) => {
+        let choiceBuffer = [...this.state.choice];
+        choiceBuffer[index] = parseInt(value);
+        this.setState({choice: choiceBuffer});
     }
 
     handleSubmit = (e, username) => {
         e.preventDefault();
 
-        fetch(baseURI + '/preferences/' + username + '?type=selection', {
+        fetch(baseURI + '/preferences/' + username + '?type=ordering', {
             method: "POST",
 
             headers: new Headers({
@@ -37,7 +41,7 @@ class Selectionpage extends React.Component {
 
             body: JSON.stringify({
                 proposed: this.state.proposed,
-                choice: parseInt(this.state.choice)
+                choice: this.state.choice
             })
         }).then((res) => {
             if(res.status === 200) {
@@ -53,27 +57,26 @@ class Selectionpage extends React.Component {
     }
 
     componentDidMount() {
-        fetch(baseURI + '/movies/proposed?type=selection&policy=probability')
+        fetch(baseURI + '/movies/proposed?type=ordering&policy=probability')
             .then((res) => {
                 if(res.status === 200) {
                     res.json().then(async (document) => {
                         let proposedIds = await document.map((movie) => movie.movieId);
-                        let movieCards = await document.map((movie, index) =>
-                            <Col key={index} className="p-1" lg="4">
-                                <label>
-                                    <input
-                                        className="card-input-element"
-                                        type="radio"
-                                        name="choice"
-                                        value={movie.movieId}
-                                        onChange={this.handleChange}
-                                    />
-                                    <Movie className="card-input" movie={movie} />
-                                </label>
-                            </Col>
-                        );
+                        this.setState({proposed: proposedIds, choice: proposedIds}, async () => {
+                            let options = await document.map((movie, index) =>
+                                <option key={index} value={movie.movieId}>{movie.title}</option>
+                            );
 
-                        this.setState({proposed: proposedIds, proposedMovieCards: movieCards});
+                            let movies = document;
+                            let selectForms = await document.map((movie, index) =>
+                                <Col className="justify-content-center p-1" key={index} lg="2">
+                                    <h4 className="text-center">Movie #{index + 1}</h4>
+                                    <Movieselect movies={movies} index={index} options={options} onChange={this.handleChange} value={movie.movieId}/>
+                                </Col>
+                            );
+
+                            this.setState({selectForms: selectForms});
+                        });
                     });
                 } else {
                     res.json().then((document) => {
@@ -86,12 +89,12 @@ class Selectionpage extends React.Component {
     }
 
     render() {
-        if(!this.state.proposedMovieCards) {
+        if(!this.state.selectForms) {
             return (
                 <Container>
                     <Row className="justify-content-center m-1">
                         <Col lg="6" className="text-center">
-                            <h1 className="text-center">Movie selection</h1>
+                            <h1 className="text-center">Movies ordering</h1>
                             <Spinner className="m-1" animation="border" />
                             <Servermessage serverSuccess={this.state.serverSuccess} serverMessage={this.state.serverMessage} />
                         </Col>
@@ -107,7 +110,7 @@ class Selectionpage extends React.Component {
                         <Container>
                             <Row className="justify-content-center m-1">
                                 <Col lg="6" className="text-center">
-                                    <h1 className="text-center">Movie selection</h1>
+                                    <h1 className="text-center">Movies ordering</h1>
                                     <Servermessage serverSuccess={false} serverMessage="You are not signed in" />
                                 </Col>
                             </Row>
@@ -116,22 +119,25 @@ class Selectionpage extends React.Component {
                         <Container>
                             <Row className="justify-content-center m-1">
                                 <Col lg="6" className="text-center">
-                                    <h1 className="text-center">Movie selection</h1>
+                                    <h1 className="text-center">Movies ordering</h1>
                                     <Servermessage serverSuccess={this.state.serverSuccess} serverMessage={this.state.serverMessage} />
                                 </Col>
                             </Row>
                             <Row className="justify-content-center m-1">
-                                <p className="text-center">Select your preference from the movies proposed below, then click 'Confirm selection'</p>
+                                <p className="text-center">Order the movies proposed below based on your preferences, then click 'Confirm order'</p>
+                                <p className="text-center">Movie #1 should be your most favourite movie</p>
                                 <p className="text-center">Click 'Next' to go to the next proposed movies</p>
-                                <form onSubmit={(e) => {this.handleSubmit(e, user.username)}}>
+                                <Form onSubmit={(e) => {this.handleSubmit(e, user.username)}}>
                                     <Row className="justify-content-center m-1" lg="6">
-                                        <Button className="btn-block m-1" variant='success' type='submit' disabled={this.state.choice === 0}>Confirm selection</Button>
+                                        <Button className="btn-block m-1" variant='success' type='submit' disabled={this.state.choice === 0}>Confirm order</Button>
                                         <Button className="btn-block m-1" variant='outline-primary' onClick={() => window.location.reload()}>Next</Button>
                                     </Row>
-                                    <Row className="justify-content-center m-1">
-                                        {this.state.proposedMovieCards}
-                                    </Row>
-                                </form>
+                                    <Container fluid>
+                                        <Row className="justify-content-center m-2 h-100">
+                                            {this.state.selectForms}
+                                        </Row>
+                                    </Container>
+                                </Form>
                             </Row>
                         </Container>
                 )}
@@ -140,4 +146,4 @@ class Selectionpage extends React.Component {
     }
 }
 
-export default Selectionpage;
+export default Orderingpage;

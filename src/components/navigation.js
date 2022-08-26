@@ -26,7 +26,7 @@ class Navigation extends Component {
                                         <>
                                             <NavDropdown title="New preference">
                                                 <NavDropdown.Item href="/selection">Movie selection</NavDropdown.Item>
-                                                <NavDropdown.Item href="/">Movies ordering</NavDropdown.Item>
+                                                <NavDropdown.Item href="/ordering">Movies ordering</NavDropdown.Item>
                                             </NavDropdown>
                                             <Nav.Link href="/rate">Rate movies</Nav.Link>
                                         </>
