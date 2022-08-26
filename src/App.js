@@ -6,6 +6,8 @@ import Signinpage from './pages/signinpage';
 import Signuppage from './pages/signuppage';
 
 import {UserContext} from "./context/usercontext";
+import Selectionpage from "./pages/selectionpage";
+import Signoutpage from "./pages/signoutpage";
 
 class App extends Component {
     constructor(props) {
@@ -38,6 +40,8 @@ class App extends Component {
                             <Route index element={<Homepage />} />
                             <Route exact path="/signin" element={<Signinpage />} />
                             <Route exact path="/signup" element={<Signuppage />} />
+                            <Route exact path="/selection" element={<Selectionpage />} />
+                            <Route exact path="/signout" element={<Signoutpage />} />
                         </Route>
                     </Routes>
                 </BrowserRouter>

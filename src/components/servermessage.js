@@ -9,16 +9,12 @@ class Servermessage extends React.Component {
         if(this.props.serverSuccess)
             return(
                 <Alert variant="success">
-                    <Alert.Heading>Success</Alert.Heading>
-                    <hr />
                     <p>{this.props.serverMessage}</p>
                 </Alert>
             );
 
         return (
             <Alert variant="danger">
-                <Alert.Heading>Error</Alert.Heading>
-                <hr />
                 <p>{this.props.serverMessage}</p>
             </Alert>
         );

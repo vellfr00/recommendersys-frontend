@@ -26,8 +26,6 @@ class Signuppage extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const body = e.target.body;
-
         fetch(baseURI + '/users/', {
             method: "POST",
 
@@ -64,7 +62,7 @@ class Signuppage extends Component {
         return (
                 <Container>
                     <Row className="justify-content-center m-1">
-                        <Col lg="6">
+                        <Col lg="6" className="text-center">
                             <h1 className="text-center">Sign up</h1>
                             <Servermessage serverSuccess={this.state.serverSuccess} serverMessage={this.state.serverMessage} />
                         </Col>

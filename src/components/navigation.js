@@ -2,7 +2,7 @@ import { Container } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
 import { Navbar } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
-import { Outlet, Link } from 'react-router-dom';
+import {Outlet} from 'react-router-dom';
 import React, { Component } from 'react';
 
 import {UserContext} from "../context/usercontext";
@@ -20,15 +20,33 @@ class Navigation extends Component {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="/signin">Sign in</Nav.Link>
-                            <Nav.Link href="/signup">Sign up</Nav.Link>
+                            <UserContext.Consumer>
+                                {({user, setUser}) => (
+                                    user &&
+                                        <>
+                                            <NavDropdown title="New preference">
+                                                <NavDropdown.Item href="/selection">Movie selection</NavDropdown.Item>
+                                                <NavDropdown.Item href="/">Movies ordering</NavDropdown.Item>
+                                            </NavDropdown>
+                                            <Nav.Link href="/rate">Rate movies</Nav.Link>
+                                        </>
+                                )}
+                            </UserContext.Consumer>
                         </Nav>
                         <UserContext.Consumer>
                             {({user, setUser}) => (
-                                user &&
-                                <Navbar.Text className="justify-content-end">
-                                    <i>Signed in as: {user.username}</i>
-                                </Navbar.Text>
+                                user ?
+                                    <Nav>
+                                        <NavDropdown title={user.firstname + ' ' + user.lastname}>
+                                            <NavDropdown.Item href="/user">Account</NavDropdown.Item>
+                                            <NavDropdown.Item href="/signout">Sign out</NavDropdown.Item>
+                                        </NavDropdown>
+                                    </Nav>
+                                    :
+                                    <Nav>
+                                        <Nav.Link href="/signin">Sign in</Nav.Link>
+                                        <Nav.Link className="btn btn-primary text-white x-1" href="/signup">Sign up</Nav.Link>
+                                    </Nav>
                             )}
                         </UserContext.Consumer>
                     </Navbar.Collapse>

@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Servermessage from '../components/servermessage'
 import {Col, Container, FloatingLabel, Row} from 'react-bootstrap';
 import {UserContext} from "../context/usercontext";
+import {Navigate} from "react-router-dom";
 
 const baseURI = 'http://localhost:8080/api';
 
@@ -27,7 +28,6 @@ class Signinpage extends Component {
             .then((res) => {
             if (res.status === 200) {
                 res.json().then((document) => {
-                    this.setState({ serverSuccess: true, serverMessage: "User logged successfully" });
                     setUser(document);
                 });
             } else {
@@ -48,16 +48,7 @@ class Signinpage extends Component {
         return (
             <UserContext.Consumer>
                 {({user, setUser}) => (
-                    user ?
-                        <Container>
-                            <Row className="justify-content-center m-1">
-                                <Col lg="6">
-                                    <h1 className="text-center">Sign in</h1>
-                                    <Servermessage serverSuccess={false} serverMessage={"Already signed in as " + user.username} />
-                                </Col>
-                            </Row>
-                        </Container>
-                        :
+                    user ? <Navigate to={'/'} /> :
                     <Container>
                         <Row className="justify-content-center m-1">
                             <Col lg="6">
