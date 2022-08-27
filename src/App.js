@@ -9,6 +9,7 @@ import {UserContext} from "./context/usercontext";
 import Selectionpage from "./pages/selectionpage";
 import Signoutpage from "./pages/signoutpage";
 import Orderingpage from "./pages/orderingpage";
+import Ratingspage from "./pages/ratingspage";
 
 class App extends Component {
     constructor(props) {
@@ -44,6 +45,7 @@ class App extends Component {
                             <Route exact path="/selection" element={<Selectionpage />} />
                             <Route exact path="/signout" element={<Signoutpage />} />
                             <Route exact path="/ordering" element={<Orderingpage />} />
+                            <Route exact path="/rate" element={<Ratingspage />} />
                         </Route>
                     </Routes>
                 </BrowserRouter>

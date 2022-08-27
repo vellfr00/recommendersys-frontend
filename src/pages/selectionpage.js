@@ -41,7 +41,7 @@ class Selectionpage extends React.Component {
             })
         }).then((res) => {
             if(res.status === 200) {
-                this.setState({serverSuccess: true, serverMessage: "Preference saved"}); //TODO
+                window.location.reload();
             } else {
                 res.json().then((document) => {
                     this.setState({serverSuccess: false, serverMessage: document.message});
