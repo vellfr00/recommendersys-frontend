@@ -1,20 +1,18 @@
 import React from "react";
 
 import {UserContext} from "../context/usercontext";
-import {Col, Container, Nav, NavDropdown, Row} from "react-bootstrap";
+import {Col, Container, Row, Spinner} from "react-bootstrap";
 import {Navigate} from "react-router-dom";
-import Button from "react-bootstrap/Button";
 
 class Signoutpage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+    componentDidMount() {
+        let {user, setUser} = this.context;
 
-    handleLogout = (setUser) => {
-        if(sessionStorage.getItem("user"))
-            sessionStorage.removeItem("user");
+        if(sessionStorage.getItem('user'))
+            sessionStorage.removeItem('user');
 
-        setUser(null);
+        if(user)
+            setUser(null);
     }
 
     render() {
@@ -26,9 +24,7 @@ class Signoutpage extends React.Component {
                             <Row className="justify-content-center">
                                 <Col className="text-center m-1" lg="6">
                                     <h1>Sign out</h1>
-                                    <Button variant='primary' onClick={(e) => {this.handleLogout(setUser)}}>
-                                        Click here to sign out
-                                    </Button>
+                                    <Spinner className="m-1" animation="border" />
                                 </Col>
                             </Row>
                         </Container>
@@ -37,5 +33,7 @@ class Signoutpage extends React.Component {
         )
     }
 }
+
+Signoutpage.contextType = UserContext;
 
 export default Signoutpage;

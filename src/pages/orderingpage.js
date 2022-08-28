@@ -1,5 +1,4 @@
 import React from "react";
-import Movie from "../components/movie";
 import {Col, Container, Form, Row, Spinner} from "react-bootstrap";
 import Servermessage from "../components/servermessage";
 import Button from "react-bootstrap/Button";
