@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import Navigation from './components/navigation'
+import Navigation from './components/layout/navigation'
 import Homepage from './pages/homepage';
-import Signinpage from './pages/signinpage';
-import Signuppage from './pages/signuppage';
+import Signinpage from './pages/authentication/signinpage';
+import Signuppage from './pages/authentication/signuppage';
 
 import {UserContext} from "./context/usercontext";
-import Selectionpage from "./pages/selectionpage";
-import Signoutpage from "./pages/signoutpage";
-import Orderingpage from "./pages/orderingpage";
-import Ratingspage from "./pages/ratingspage";
+import Selectionpage from "./pages/preferences/selectionpage";
+import Signoutpage from "./pages/authentication/signoutpage";
+import Orderingpage from "./pages/preferences/orderingpage";
+import Ratingspage from "./pages/preferences/ratingspage";
+import Accountpage from "./pages/authentication/accountpage";
 
 class App extends Component {
     constructor(props) {
@@ -46,6 +47,7 @@ class App extends Component {
                             <Route exact path="/signout" element={<Signoutpage />} />
                             <Route exact path="/ordering" element={<Orderingpage />} />
                             <Route exact path="/rate" element={<Ratingspage />} />
+                            <Route exact path="/account" element={<Accountpage />} />
                         </Route>
                     </Routes>
                 </BrowserRouter>

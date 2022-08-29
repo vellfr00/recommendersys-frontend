@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Servermessage from '../components/servermessage'
+import Servermessage from '../../components/layout/servermessage'
 import {Col, Container, FloatingLabel, Row} from 'react-bootstrap';
-import {UserContext} from "../context/usercontext";
+import {UserContext} from "../../context/usercontext";
 import {Navigate} from "react-router-dom";
 
 const baseURI = 'http://localhost:8080/api';

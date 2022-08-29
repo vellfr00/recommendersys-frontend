@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 
-import image_not_available from '../img/image_not_available.png'
+import image_not_available from '../../img/image_not_available.png'
 
 const IMDBPosters_BaseURI = 'https://imdb-api.com/en/API/Posters/k_9tq249sp/tt';
 

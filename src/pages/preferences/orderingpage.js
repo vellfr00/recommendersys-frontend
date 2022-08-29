@@ -1,9 +1,9 @@
 import React from "react";
 import {Col, Container, Form, Row, Spinner} from "react-bootstrap";
-import Servermessage from "../components/servermessage";
+import Servermessage from "../../components/layout/servermessage";
 import Button from "react-bootstrap/Button";
-import {UserContext} from "../context/usercontext";
-import Movieselect from "../components/movieselect";
+import {UserContext} from "../../context/usercontext";
+import Movieselect from "../../components/movie/movieselect";
 
 const baseURI = 'http://localhost:8080/api';
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-import {UserContext} from "../context/usercontext";
+import {UserContext} from "../../context/usercontext";
 import {Col, Container, Row, Spinner} from "react-bootstrap";
 import {Navigate} from "react-router-dom";
 

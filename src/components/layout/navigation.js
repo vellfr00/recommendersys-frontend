@@ -5,7 +5,7 @@ import { NavDropdown } from 'react-bootstrap';
 import {Outlet} from 'react-router-dom';
 import React, { Component } from 'react';
 
-import {UserContext} from "../context/usercontext";
+import {UserContext} from "../../context/usercontext";
 
 class Navigation extends Component {
     render() {
@@ -14,7 +14,7 @@ class Navigation extends Component {
                 <Navbar bg='light' expand='lg'>
                 <Container>
                     <Navbar.Brand>
-                        <img src={require('../img/poliflix.png')} alt='' className='d-inline-block align-center' width='70px' height='35px' />
+                        <img src={require('../../img/poliflix.png')} alt='' className='d-inline-block align-center' width='70px' height='35px' />
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
@@ -38,7 +38,7 @@ class Navigation extends Component {
                                 user ?
                                     <Nav>
                                         <NavDropdown title={user.firstname + ' ' + user.lastname}>
-                                            <NavDropdown.Item href="/user">Account</NavDropdown.Item>
+                                            <NavDropdown.Item href="/account">Account</NavDropdown.Item>
                                             <NavDropdown.Item href="/signout">Sign out</NavDropdown.Item>
                                         </NavDropdown>
                                     </Nav>

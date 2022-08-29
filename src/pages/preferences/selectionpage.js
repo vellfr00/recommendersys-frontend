@@ -1,9 +1,9 @@
 import React from "react";
-import Movie from "../components/movie";
+import Movie from "../../components/movie/movie";
 import {Col, Container, Row, Spinner} from "react-bootstrap";
-import Servermessage from "../components/servermessage";
+import Servermessage from "../../components/layout/servermessage";
 import Button from "react-bootstrap/Button";
-import {UserContext} from "../context/usercontext";
+import {UserContext} from "../../context/usercontext";
 
 const baseURI = 'http://localhost:8080/api';
 

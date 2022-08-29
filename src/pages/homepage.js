@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
-import Card from '../components/card';
-
-import thor from '../img/thor.jpg';
+import {Col, Container, Row} from "react-bootstrap";
 
 class Homepage extends Component {
     render() {
-        return (
-            <main>
-                <h1>Homepage</h1>
-                <Card
-                    card={{
-                        filmTitle: 'prova',
-                        filmDesc: 'prova',
-                        filmCover: thor
-                    }
-                    }
-                />
-            </main>
+        return(
+            <Container>
+                <Row className="justify-content-center m-1">
+                    <Col lg="6" className="text-center">
+                        <h1 className="text-center">Homepage</h1>
+                    </Col>
+                </Row>
+                <Row className="justify-content-center m-1">
+
+                </Row>
+            </Container>
         );
     }
 }
