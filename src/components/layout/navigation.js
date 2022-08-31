@@ -44,8 +44,8 @@ class Navigation extends Component {
                                     </Nav>
                                     :
                                     <Nav>
-                                        <Nav.Link href="/signin">Sign in</Nav.Link>
-                                        <Nav.Link className="btn btn-primary text-white x-1" href="/signup">Sign up</Nav.Link>
+                                        <Nav.Link className="btn btn-light btn-outline-secondary mx-1"href="/signin">Sign in</Nav.Link>
+                                        <Nav.Link className="btn btn-primary text-white mx-1" href="/signup">Sign up</Nav.Link>
                                     </Nav>
                             )}
                         </UserContext.Consumer>
