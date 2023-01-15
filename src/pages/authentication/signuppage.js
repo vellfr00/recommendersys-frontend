@@ -15,6 +15,7 @@ class Signuppage extends Component {
             serverMessage: "",
 
             username: "",
+            password: "",
             firstname: "",
             lastname: "",
             age: "",
@@ -35,11 +36,11 @@ class Signuppage extends Component {
 
             body: JSON.stringify({
                 username: this.state.username,
+                password: this.state.password,
                 firstname: this.state.firstname,
                 lastname: this.state.lastname,
                 gender: this.state.gender,
                 age: this.state.age,
-                elicitationId: this.state.elicitationId
             })
         }).then((res) => {
             if (res.status === 200) {
@@ -76,8 +77,8 @@ class Signuppage extends Component {
                                     </FloatingLabel>
                                 </Col>
                                 <Col lg="2">
-                                    <FloatingLabel label="ElicitationId">
-                                        <Form.Control placeholder="ElicitationId" type='number' name='elicitationId' value={this.state.elicitationId} onChange={this.handleChange} />
+                                    <FloatingLabel label="Password">
+                                        <Form.Control placeholder="Password" type='password' name='password' value={this.state.password} onChange={this.handleChange} />
                                     </FloatingLabel>
                                 </Col>
                             </Row>

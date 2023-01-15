@@ -17,14 +17,14 @@ class Signinpage extends Component {
             serverMessage: "",
 
             username: "",
-            elicitationId: ""
+            password: ""
         }
     }
 
     handleLogin = (e, setUser) => {
         e.preventDefault();
 
-        fetch(baseURI + '/users/' + this.state.username + '?elicitationId=' + this.state.elicitationId)
+        fetch(baseURI + '/users/' + this.state.username + '?password=' + this.state.password)
             .then((res) => {
             if (res.status === 200) {
                 res.json().then((document) => {
@@ -67,8 +67,8 @@ class Signinpage extends Component {
                                 </Row>
                                 <Row className="justify-content-center p-1">
                                     <Col lg="6">
-                                        <FloatingLabel label="ElicitationId">
-                                            <Form.Control placeholder="ElicitationId" type='number' name='elicitationId' value={this.state.elicitationId} onChange={this.handleChange} />
+                                        <FloatingLabel label="Password">
+                                            <Form.Control placeholder="Password" type='password' name='password' value={this.state.password} onChange={this.handleChange} />
                                         </FloatingLabel>
                                     </Col>
                                 </Row>
