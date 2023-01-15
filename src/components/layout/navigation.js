@@ -24,11 +24,11 @@ class Navigation extends Component {
                                 {({user, setUser}) => (
                                     user &&
                                         <>
-                                            <NavDropdown title="New preference">
+                                            <NavDropdown title="New elicitation">
                                                 <NavDropdown.Item href="/selection">Movie selection</NavDropdown.Item>
                                                 <NavDropdown.Item href="/ordering">Movies ordering</NavDropdown.Item>
+                                                <NavDropdown.Item href="/rate">Rate movies</NavDropdown.Item>
                                             </NavDropdown>
-                                            <Nav.Link href="/rate">Rate movies</Nav.Link>
                                         </>
                                 )}
                             </UserContext.Consumer>
