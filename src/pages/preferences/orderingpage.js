@@ -60,14 +60,14 @@ class Orderingpage extends React.Component {
             .then((res) => {
                 if(res.status === 200) {
                     res.json().then(async (document) => {
-                        let proposedIds = await document.map((movie) => movie.movieId);
+                        let proposedIds = await document.movies.map((movie) => movie.movieId);
                         this.setState({proposed: proposedIds, choice: proposedIds}, async () => {
-                            let options = await document.map((movie, index) =>
+                            let options = await document.movies.map((movie, index) =>
                                 <option key={index} value={movie.movieId}>{movie.title}</option>
                             );
 
-                            let movies = document;
-                            let selectForms = await document.map((movie, index) =>
+                            let movies = document.movies;
+                            let selectForms = await document.movies.map((movie, index) =>
                                 <Col className="justify-content-center p-1" key={index} lg="2">
                                     <h4 className="text-center">Movie #{index + 1}</h4>
                                     <Movieselect movies={movies} index={index} options={options} onChange={this.handleChange} value={movie.movieId}/>

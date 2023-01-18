@@ -17,12 +17,26 @@ class Selectionpage extends React.Component {
 
             proposed: [],
             proposedMovieCards: null,
-            choice: 0
+            choice: [],
+            currentChoice: null     //rappresenta il film selezionato tra i due proposti temporaneamente per poi salvarlo in choice[]
         };
     }
 
+    //prendo il valore del film e lo assegno a currentChoice
+
     handleChange = (e) => {
-        this.setState({choice: e.target.value});
+        let choices = this.state.choice;
+        const nextChoice = parseInt(e.target.value);
+        
+        if(this.state.currentChoice){
+            let choiceToRemoveIndex = choices.indexOf(this.state.currentChoice);
+
+            choices.splice(choiceToRemoveIndex,1);
+        }
+
+        choices = [nextChoice,...choices]   //creiamo una nuova lista con un elemento nuovo + tutti gli altri elementi della lista
+
+        this.setState({choice: choices, currentChoice:nextChoice});
     }
 
     handleSubmit = (e, username) => {
@@ -37,7 +51,7 @@ class Selectionpage extends React.Component {
 
             body: JSON.stringify({
                 proposed: this.state.proposed,
-                choice: parseInt(this.state.choice)
+                choice: this.state.choice,
             })
         }).then((res) => {
             if(res.status === 200) {
@@ -57,8 +71,9 @@ class Selectionpage extends React.Component {
             .then((res) => {
                 if(res.status === 200) {
                     res.json().then(async (document) => {
-                        let proposedIds = await document.map((movie) => movie.movieId);
-                        let movieCards = await document.map((movie, index) =>
+                        let newProposedIds = await document.movies.map((movie) => movie.movieId);
+                        let proposed = [newProposedIds,...this.state.proposed];
+                        let movieCards = await document.movies.map((movie, index) =>
                             <Col key={index} className="p-1" lg="4">
                                 <label>
                                     <input
@@ -73,7 +88,7 @@ class Selectionpage extends React.Component {
                             </Col>
                         );
 
-                        this.setState({proposed: proposedIds, proposedMovieCards: movieCards});
+                        this.setState({proposed: proposed, proposedMovieCards: movieCards});
                     });
                 } else {
                     res.json().then((document) => {
@@ -83,6 +98,19 @@ class Selectionpage extends React.Component {
             }).catch((error) => {
             this.setState({serverSuccess: false, serverMessage: error.message});
         });
+    }
+
+    // metodo per fare il reload solo delle moviesCard ed evitare di ricaricare l'intera pagina quando si preme next
+
+    resetAndShowNextProposedMovies(){
+        this.setState({currentChoice:null, proposedMovieCards:null});
+
+        this.componentDidMount();
+    }
+
+    skipChoice(){
+        this.state.proposed.shift();
+        this.resetAndShowNextProposedMovies();
     }
 
     render() {
@@ -98,6 +126,13 @@ class Selectionpage extends React.Component {
                     </Row>
                 </Container>
             );
+        }
+
+        let nextChoicesButton;
+        if(this.state.currentChoice!=null){
+            nextChoicesButton=<Button className="btn-block m-1" variant='outline-primary' onClick={() => this.resetAndShowNextProposedMovies()}>Next</Button>;
+        }else{
+            nextChoicesButton=<Button className="btn-block m-1" variant='outline-primary' onClick={() => this.skipChoice()}>Skip</Button>;
         }
 
         return (
@@ -125,8 +160,8 @@ class Selectionpage extends React.Component {
                                 <p className="text-center">Click 'Next' to go to the next proposed movies</p>
                                 <form onSubmit={(e) => {this.handleSubmit(e, user.username)}}>
                                     <Row className="justify-content-center m-1" lg="6">
-                                        <Button className="btn-block m-1" variant='success' type='submit' disabled={this.state.choice === 0}>Confirm selection</Button>
-                                        <Button className="btn-block m-1" variant='outline-primary' onClick={() => window.location.reload()}>Next</Button>
+                                        <Button className="btn-block m-1" variant='success' type='submit' disabled={this.state.proposed.length < 5 || this.state.currentChoice==null}>Confirm selection</Button>
+                                        {nextChoicesButton}
                                     </Row>
                                     <Row className="justify-content-center m-1">
                                         {this.state.proposedMovieCards}
