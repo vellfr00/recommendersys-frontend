@@ -17,15 +17,30 @@ class Orderingpage extends React.Component {
 
             proposed: [],
             proposedMovieCards: null,
+            currentProposed: [],
+            currentChoice: [],
             selectForms: null,
             choice: []
         };
     }
 
+    saveChoice(){
+        this.setState({
+            choice: [this.state.currentChoice, ...this.state.choice], 
+            proposed: [this.state.currentProposed, ...this.state.proposed],
+            currentChoice: [],
+            currentProposed: [],
+            selectForms: null,
+            proposedMovieCards: null,
+        });
+        
+        this.componentDidMount();
+    }
+
     handleChange = (index, value) => {
-        let choiceBuffer = [...this.state.choice];
+        let choiceBuffer = [...this.state.currentChoice];
         choiceBuffer[index] = parseInt(value);
-        this.setState({choice: choiceBuffer});
+        this.setState({currentChoice: choiceBuffer});
     }
 
     handleSubmit = (e, username) => {
@@ -61,7 +76,7 @@ class Orderingpage extends React.Component {
                 if(res.status === 200) {
                     res.json().then(async (document) => {
                         let proposedIds = await document.movies.map((movie) => movie.movieId);
-                        this.setState({proposed: proposedIds, choice: proposedIds}, async () => {
+                        this.setState({currentProposed: proposedIds, currentChoice: proposedIds}, async () => {
                             let options = await document.movies.map((movie, index) =>
                                 <option key={index} value={movie.movieId}>{movie.title}</option>
                             );
@@ -128,8 +143,8 @@ class Orderingpage extends React.Component {
                                 <p className="text-center">Click 'Next' to go to the next proposed movies</p>
                                 <Form onSubmit={(e) => {this.handleSubmit(e, user.username)}}>
                                     <Row className="justify-content-center m-1" lg="6">
-                                        <Button className="btn-block m-1" variant='success' type='submit' disabled={this.state.choice === 0}>Confirm order</Button>
-                                        <Button className="btn-block m-1" variant='outline-primary' onClick={() => window.location.reload()}>Next</Button>
+                                        <Button className="btn-block m-1" variant='success' type='submit' disabled={this.state.choice.length < 5 }>Confirm order</Button>
+                                        <Button className="btn-block m-1" variant='outline-primary' type='button' onClick={() => this.saveChoice()}>Next</Button>
                                     </Row>
                                     <Container fluid>
                                         <Row className="justify-content-center m-2 h-100">
