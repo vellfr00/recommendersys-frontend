@@ -1,5 +1,5 @@
 import React from "react";
-import {Col, Container, Row, Spinner} from "react-bootstrap";
+import {Button, Col, Container, Row, Spinner} from "react-bootstrap";
 import Servermessage from "../../components/layout/servermessage";
 import {UserContext} from "../../context/usercontext";
 import Movierating from "../../components/movie/movierating";
@@ -13,6 +13,7 @@ class Ratingspage extends React.Component {
         this.state = {
             serverSuccess: false,
             serverMessage: "",
+            serverLoading: true,
 
             movies: null,
             toRate: null
@@ -51,15 +52,15 @@ class Ratingspage extends React.Component {
                             </Col>
                         );
 
-                        this.setState({movies: document, toRate: forms});
+                        this.setState({movies: document, toRate: forms, serverLoading: false});
                     });
                 } else {
                     res.json().then((document) => {
-                        this.setState({serverSuccess: false, serverMessage: document.message});
+                        this.setState({serverSuccess: false, serverMessage: document.message, serverLoading: false});
                     });
                 }
             }).catch((error) => {
-            this.setState({serverSuccess: false, serverMessage: error.message});
+            this.setState({serverSuccess: false, serverMessage: error.message, serverLoading: false});
         });
 
     }
@@ -71,8 +72,9 @@ class Ratingspage extends React.Component {
                     <Row className="justify-content-center m-1">
                         <Col lg="6" className="text-center">
                             <h1 className="text-center">Rate movies</h1>
-                            <Spinner className="m-1" animation="border" />
+                            <Spinner className="m-1" animation="border" style={{display: this.state.serverLoading ? "block" : "none"}} />
                             <Servermessage serverSuccess={this.state.serverSuccess} serverMessage={this.state.serverMessage} />
+                            <Button className="btn-secondary text-white m-1" href="/selection" style={{display: !this.state.serverLoading ? "" : "none"}}>Movie selection</Button>
                         </Col>
                     </Row>
                 </Container>
